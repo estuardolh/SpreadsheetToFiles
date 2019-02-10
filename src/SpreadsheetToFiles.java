@@ -1,12 +1,16 @@
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.CharsetDecoder;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 import com.github.miachm.SODS.spreadsheet.Range;
 import com.github.miachm.SODS.spreadsheet.Sheet;
@@ -68,8 +72,10 @@ public class SpreadsheetToFiles {
 		return configuration;
 	}
 	
-	public void execute(boolean debug) throws IOException, TemplateException {
+	public String render(boolean debug, boolean write_files) throws IOException, TemplateException {
 		Configuration configuration = getTemplatesConfig();
+		
+		String output = "";
 		
 		LinkedHashMap<String, List<LinkedHashMap<String, String>>> root = new LinkedHashMap<String, List<LinkedHashMap<String, String>>>();
 		
@@ -79,6 +85,7 @@ public class SpreadsheetToFiles {
 		SpreadSheet spread = new SpreadSheet(new File( this.ods_file_path ));
 		for(Sheet sheet: spread.getSheets()) {
 			Range range = sheet.getDataRange();
+			if(debug) Log.debug(range.toString());
 			
 			List<String> header_list = null;
 			
@@ -106,7 +113,7 @@ public class SpreadsheetToFiles {
 					if(debug) Log.debug("  ["+row_j+"]["+column_i+"] "+(cell==null?"(NULL)":cell.toString()));
 					
         			if(row_j > 0 && column_i < row.length) {
-        				if(header_list == null) Log.debug("header nulo!");
+        				if(header_list == null && debug) Log.debug("Null header");
         				row_filling_map.put(header_list.get(column_i), (cell==null?"":cell.toString()));
         				if(debug) Log.debug("  Row: Map: key-value\""+header_list.get(column_i)+"\"-\""+(cell==null?"(NULL)":cell.toString())+"\"");
         			}
@@ -129,13 +136,27 @@ public class SpreadsheetToFiles {
 		File file = new File(this.templates_directory);
 		for(File a_file : file.listFiles()) {
 			String file_name = a_file.getName();
-			if(debug) Log.debug("  archivos: "+file_name);
+			if(debug) Log.debug("  file to render: "+file_name);
 			
 			Template template = configuration.getTemplate(file_name);
 			
-			Writer out = new OutputStreamWriter(System.out);
+			ByteArrayOutputStream byte_array_oput_stream = new ByteArrayOutputStream();; 
+			Writer out = new OutputStreamWriter(byte_array_oput_stream);
 			
 			template.process(root, out);
+			
+			out.close();
+			
+			String renderized = byte_array_oput_stream.toString("UTF-8"); 
+			
+			String output_path = this.output_directory+file_name;
+			File output_file = new File(output_path);
+			
+			FileUtils.writeStringToFile(output_file, renderized, "UTF-8");
+			
+			output += renderized;
 		}
+		
+		return output;
 	}
 }

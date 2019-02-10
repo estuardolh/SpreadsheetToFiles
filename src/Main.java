@@ -27,6 +27,9 @@ public class Main {
 		String ods_file_path = values[0];
 		String template_directory = values[1];
 		String output_directory = values[2];
+		Boolean debug_mode = Boolean.parseBoolean(values[3]);
+		
+		long since = System.currentTimeMillis();
 		
 		SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
 		spreadsheet_to_files.setOdsFilePath(ods_file_path);
@@ -34,7 +37,16 @@ public class Main {
 		spreadsheet_to_files.setOutputDirectory(output_directory);
 		
 		try {
-			spreadsheet_to_files.execute(true);
+			spreadsheet_to_files.render(debug_mode, true);
+			
+			long miliseconds_used = (System.currentTimeMillis()-since);
+			if(miliseconds_used > 1000) {
+				Log.message("Generated in "+(miliseconds_used/1000)+" seconds.");
+			}else {
+				Log.message("Generated in "+miliseconds_used+" miliseconds.");
+			}
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,10 +59,10 @@ public class Main {
 	/**
 	 * 
 	 * @param args
-	 * @return [ODS_FILE_PATH, TEMPLATE_DIRECTORY, OUTPUT_DIRECTORY]
+	 * @return [ODS_FILE_PATH, TEMPLATE_DIRECTORY, OUTPUT_DIRECTORY, DEBUG_MODE]
 	 */
 	public static String[] processParametersAndReturnValues(String[] args) {
-		String[] parameters = new String[3];
+		String[] parameters = new String[] {"", "", "", Boolean.toString(false)};
 		
 		Option output_option = OptionBuilder.withArgName("output directory")
 				.hasArg()
@@ -62,9 +74,14 @@ public class Main {
 				.withDescription("templates directory")
 				.create("t");
 		
+		Option debug_option = OptionBuilder
+				.withDescription("debug mode on")
+				.create("d");
+		
 		Options options = new Options();
 		options.addOption(output_option);
 		options.addOption(templates_option);
+		options.addOption(debug_option);
 		
 		CommandLineParser parser = new DefaultParser();
 		CommandLine line = null;
@@ -78,7 +95,7 @@ public class Main {
 		HelpFormatter help_formatter = new HelpFormatter();
 		
 		if(args.length == 0) {
-			help_formatter.printHelp("java -jar SpreadsheetToFiles.jar <input ods file> -t <templates directory> -o <output directory>", options);
+			help_formatter.printHelp("java -jar SpreadsheetToFiles.jar <input ods file> -t <templates directory> -o <output directory> [ -d ]", options);
 		}
 		
 		if(line.getArgs().length > 0) {
@@ -89,6 +106,10 @@ public class Main {
 		}
 		if(line.hasOption("o")) {
 			parameters[2] = line.getOptionValue("o");
+		}
+		
+		if(line.hasOption("d")) {
+			parameters[3] = Boolean.toString(true);
 		}
 		
 		return parameters;
