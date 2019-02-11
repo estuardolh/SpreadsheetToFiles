@@ -140,7 +140,7 @@ public class SpreadsheetToFiles {
 			if(debug) Log.debug("  file to render: "+file_name);
 
 			if(!first) {
-				Log.message("  Processing:");
+				Log.message("Processing:");
 				first = true;
 			}
 			

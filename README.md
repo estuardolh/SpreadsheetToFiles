@@ -1,23 +1,38 @@
 # SpreadsheetToFiles
-Generate Text FileS using a Spreadsheet and Templates for rendering.
+Generate Text Files using a Spreadsheet and Templates for rendering.
+
+It uses ODS as format for Spreadsheet, and Apache Freemaker as template system.
+
+```
+usage: java -jar SpreadsheetToFiles.jar <input ods file> -t <templates directory> -o <output directory> [ -d ]
+ -d                         debug mode on
+ -o <output directory>      output file path
+ -t <templates directory>   templates directory
+```
+
+#### Templates
+For template design check out [here](https://freemarker.apache.org/docs/dgui.html)	
+
+
 
 ## Examples
 Files for example:
 ```
 - stage/
-  - tests.ods   spreadsheet, sheet products, table with headers id,name,cost,units
-  - templates/  templates JSON, SQL, XML
+  - tests.ods              spreadsheet, sheet products, table with headers id,name,cost,units
+  - templates/             templates JSON, SQL, XML
     - product.json
     - product.sql
     - product.xml
-  - outputs/    generated/renderized files
+    - product.yml
+  - outputs/               generated/renderized files
 ```
 
-### Execution:
+#### Execution:
 ```
-  java -jar tests.ods -t ./stage/templates -o ./stage/outputs
+  java -jar tests.ods -t ./stage/templates/ -o ./stage/outputs/
 ```
-### Outputs:
+#### Outputs:
 
 product.json
 ```
@@ -79,5 +94,9 @@ product.xml:
 </products>
 ```
 
-## Libraries
-- Apache libraries, [SODS](https://github.com/miachm/SODS), POI, Freemaker are under [Apache License Version 2.0](lib/LICENSE)
+
+
+## Libraries used
+- [Apache commons](http://commons.apache.org/), for license see [here](http://www.apache.org/licenses/)
+- [Apache Freemaker](https://freemarker.apache.org/), for licence see [here](https://freemarker.apache.org/docs/app_license.html)
+- [SODS](https://github.com/miachm/SODS), for licence see [here](https://github.com/miachm/SODS/blob/master/LICENSE)
