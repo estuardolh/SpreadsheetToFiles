@@ -134,9 +134,17 @@ public class SpreadsheetToFiles {
 		 * Render templates
 		 */
 		File file = new File(this.templates_directory);
+		boolean first = false;
 		for(File a_file : file.listFiles()) {
 			String file_name = a_file.getName();
 			if(debug) Log.debug("  file to render: "+file_name);
+
+			if(!first) {
+				Log.message("  Processing:");
+				first = true;
+			}
+			
+			Log.message("  - "+templates_directory+file_name);
 			
 			Template template = configuration.getTemplate(file_name);
 			
@@ -156,6 +164,8 @@ public class SpreadsheetToFiles {
 			
 			output += renderized;
 		}
+		Log.message("  ");
+		Log.message("  "+file.listFiles().length+" files generated at "+output_directory);
 		
 		return output;
 	}

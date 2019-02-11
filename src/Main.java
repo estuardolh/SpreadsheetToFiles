@@ -31,28 +31,31 @@ public class Main {
 		
 		long since = System.currentTimeMillis();
 		
-		SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
-		spreadsheet_to_files.setOdsFilePath(ods_file_path);
-		spreadsheet_to_files.setTemplatesDirectory( template_directory );
-		spreadsheet_to_files.setOutputDirectory(output_directory);
-		
-		try {
-			spreadsheet_to_files.render(debug_mode, true);
+		if(! ods_file_path.isEmpty()) {
+			SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
+			spreadsheet_to_files.setOdsFilePath(ods_file_path);
+			spreadsheet_to_files.setTemplatesDirectory( template_directory );
+			spreadsheet_to_files.setOutputDirectory(output_directory);
 			
-			long miliseconds_used = (System.currentTimeMillis()-since);
-			if(miliseconds_used > 1000) {
-				Log.message("Generated in "+(miliseconds_used/1000)+" seconds.");
-			}else {
-				Log.message("Generated in "+miliseconds_used+" miliseconds.");
+			try {
+				spreadsheet_to_files.render(debug_mode, true);
+				
+				long miliseconds_used = (System.currentTimeMillis()-since);
+				if(miliseconds_used > 1000) {
+					Log.message("Generated in "+(miliseconds_used/1000)+" seconds.");
+				}else {
+					Log.message("");
+					Log.message("Generated in "+miliseconds_used+" miliseconds.");
+				}
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TemplateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TemplateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

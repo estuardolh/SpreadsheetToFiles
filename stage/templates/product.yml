@@ -1,0 +1,8 @@
+---
+products:
+<#list products as product>
+  - ${product.id}:
+    units: ${product.units?eval}
+    cost:${product.cost}
+    name:${product.name}
+</#list>
