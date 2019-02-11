@@ -94,7 +94,16 @@ product.xml:
 </products>
 ```
 
+## Development
+To test:
+```
+mvn test
+```
 
+To generate executable jar:
+```
+mvn package
+```
 
 ## Libraries used
 - [Apache commons](http://commons.apache.org/), for license see [here](http://www.apache.org/licenses/)
