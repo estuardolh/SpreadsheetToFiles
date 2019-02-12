@@ -47,13 +47,11 @@ public class Main {
 					Log.message("");
 					Log.message("Generated in "+miliseconds_used+" miliseconds.");
 				}
-				
-				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Log.error("At input/output.");
 				e.printStackTrace();
 			} catch (TemplateException e) {
-				// TODO Auto-generated catch block
+				Log.error("At Template reading.");
 				e.printStackTrace();
 			}
 		}

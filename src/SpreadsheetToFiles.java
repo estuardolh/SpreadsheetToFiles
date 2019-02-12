@@ -140,11 +140,11 @@ public class SpreadsheetToFiles {
 			if(debug) Log.debug("  file to render: "+file_name);
 
 			if(!first) {
-				Log.message("Processing:");
+				Log.message("Generating:");
 				first = true;
 			}
 			
-			Log.message("  - "+templates_directory+file_name);
+			Log.message("  - "+this.output_directory+file_name);
 			
 			Template template = configuration.getTemplate(file_name);
 			
@@ -165,7 +165,7 @@ public class SpreadsheetToFiles {
 			output += renderized;
 		}
 		Log.message("  ");
-		Log.message("  "+file.listFiles().length+" files generated at "+output_directory);
+		Log.message("  "+file.listFiles().length+" files generated.");
 		
 		return output;
 	}
