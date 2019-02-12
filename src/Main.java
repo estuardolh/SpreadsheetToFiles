@@ -15,6 +15,7 @@ import org.apache.log4j.varia.NullAppender;
 import freemarker.template.TemplateException;
 
 public class Main {
+	public static final String SPREADSHEET_TO_FILES_VERSION = "1.0";
 	
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
@@ -67,23 +68,28 @@ public class Main {
 		
 		Option output_option = OptionBuilder.withArgName("output directory")
 				.hasArg()
-				.withDescription("output file path")
+				.withDescription("output directory path")
 				.create("o");
 		
 		Option templates_option = OptionBuilder.withArgName("templates directory")
 				.hasArg()
-				.withDescription("templates directory")
+				.withDescription("templates directory path")
 				.create("t");
 		
 		Option debug_option = OptionBuilder
 				.withDescription("debug mode on")
 				.create("d");
 		
+		Option version_option = OptionBuilder
+				.withDescription("show version")
+				.create("version");
+		
 		Options options = new Options();
 		options.addOption(output_option);
 		options.addOption(templates_option);
 		options.addOption(debug_option);
-		
+		options.addOption(version_option);
+				
 		CommandLineParser parser = new DefaultParser();
 		CommandLine line = null;
 		try {
@@ -96,7 +102,7 @@ public class Main {
 		HelpFormatter help_formatter = new HelpFormatter();
 		
 		if(args.length == 0) {
-			help_formatter.printHelp("java -jar SpreadsheetToFiles.jar <input ods file> -t <templates directory> -o <output directory> [ -d ]", options);
+			help_formatter.printHelp("java -jar SpreadsheetToFiles-"+SPREADSHEET_TO_FILES_VERSION+".jar <input ods file> -t <templates directory> -o <output directory> [ -d ]", options);
 		}
 		
 		if(line.getArgs().length > 0) {
@@ -111,6 +117,10 @@ public class Main {
 		
 		if(line.hasOption("d")) {
 			parameters[3] = Boolean.toString(true);
+		}
+		
+		if(line.hasOption("version")) {
+			Log.message("SpreadsheetToFiles Version "+SPREADSHEET_TO_FILES_VERSION);
 		}
 		
 		return parameters;
