@@ -144,7 +144,7 @@ public class SpreadsheetToFiles {
 				first = true;
 			}
 			
-			Log.message("  - "+this.output_directory+file_name);
+			Log.message("  - "+file_name);
 			
 			Template template = configuration.getTemplate(file_name);
 			
@@ -165,7 +165,7 @@ public class SpreadsheetToFiles {
 			output += renderized;
 		}
 		Log.message("  ");
-		Log.message("  "+file.listFiles().length+" files generated.");
+		Log.message("  "+file.listFiles().length+" files generated at "+this.output_directory);
 		
 		return output;
 	}

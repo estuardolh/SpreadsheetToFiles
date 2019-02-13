@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.cli.CommandLine;
@@ -8,10 +9,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.configuration2.INIConfiguration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.varia.NullAppender;
-
 import freemarker.template.TemplateException;
 
 public class Main {
@@ -123,6 +126,30 @@ public class Main {
 			Log.message("SpreadsheetToFiles Version "+SPREADSHEET_TO_FILES_VERSION);
 		}
 		
+		INIConfiguration ini_configuration = getIniConfiguration("configuration.ini");
+		
+		if(ini_configuration != null && !line.hasOption("version") ) {
+			parameters[0] = (line.getArgs()[0].isEmpty()?ini_configuration.getString("main.ods_file_path"):line.getArgs()[0]);
+			parameters[1] = (!line.hasOption("t")?ini_configuration.getString("main.templates_directory_path"):line.getOptionValue("t"));
+			parameters[2] = (!line.hasOption("o")?ini_configuration.getString("main.output_directory_path"):line.getOptionValue("o"));
+		}
+		
 		return parameters;
+	}
+	
+	public static INIConfiguration getIniConfiguration(String ods_file_path) {
+		File ods_file = new File(ods_file_path);
+		INIConfiguration ini_configuration = null;
+		if(ods_file.exists()) {
+			Configurations configurations = new Configurations();
+			try {
+				ini_configuration = configurations.ini(ods_file_path);
+			} catch (ConfigurationException e) {
+				Log.error("At reading "+ods_file_path+".");
+				e.printStackTrace();
+			}
+		}
+		
+		return ini_configuration;
 	}
 }
