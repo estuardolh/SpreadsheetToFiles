@@ -3,6 +3,8 @@ Generate Text Files using a Spreadsheet and Templates for rendering.
 
 It uses ODS as format for Spreadsheet, and Apache Freemaker as template system.
 
+You can create your own template! so, imagination is the limit.
+
 ```
 usage: java -jar SpreadsheetToFiles.jar <input ods file> -t <templates directory> -o <output directory> [ -d ]
  -d                         debug mode on
@@ -15,7 +17,7 @@ usage: java -jar SpreadsheetToFiles.jar <input ods file> -t <templates directory
 For template design check out [here](https://freemarker.apache.org/docs/dgui.html)	
 
 
-## Examples
+## Example
 
 **ODs content**
 
@@ -35,6 +37,11 @@ For template design check out [here](https://freemarker.apache.org/docs/dgui.htm
   </product>
 </#list>
 </products>
+```
+
+**Execution:**
+```
+  java -jar tests.ods -t ./stage/templates/ -o ./stage/outputs/
 ```
 
 **Output**
@@ -63,10 +70,7 @@ For template design check out [here](https://freemarker.apache.org/docs/dgui.htm
 </products>
 ```
 
-**Execution:**
-```
-  java -jar tests.ods -t ./stage/templates/ -o ./stage/outputs/
-```
+For more examples checkout [here](./stage/)
 
 ## Development
 To test:
