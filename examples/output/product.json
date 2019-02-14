@@ -1,0 +1,22 @@
+[
+  {
+  "id":"M1", 
+  "units":"100",
+  "cost":"10.0",
+  "name":"SMART PHONE P"
+  },
+
+  {
+  "id":"M2", 
+  "units":"200",
+  "cost":"20.0",
+  "name":"SMART PHONE Q"
+  },
+
+  {
+  "id":"M3", 
+  "units":"300",
+  "cost":"30.5",
+  "name":"SMART PHONE R"
+  }
+]

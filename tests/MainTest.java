@@ -18,6 +18,10 @@ public class MainTest {
   private final PrintStream originalOut = System.out;
   private final PrintStream originalErr = System.err;
 
+  public static String ods_file_path = "./examples/test.ods";
+  public static String template_directory_path = "./examples/templates/";
+  public static String output_directory_path = "./examples/output/";
+  
   @BeforeMethod
   public void setUpStreams() {
 	  System.setOut(new PrintStream(outContent));
@@ -29,13 +33,13 @@ public class MainTest {
   
   @Test
   public void testDebug() {
-	  Main.main(new String[] {"./stage/test.ods","-t","./stage/templates/", "-o", "./stage/outputs/"});
+	  Main.main(new String[] {ods_file_path,"-t",template_directory_path, "-o", output_directory_path});
 	  assertFalse(errContent.toString().contains("[debug]"), "[debug] tag found.");
   }
   
   @Test
   public void testNoDebug() {
-	  Main.main(new String[] {"./stage/test.ods","-t","./stage/templates/", "-o", "./stage/outputs/","-d"});
+	  Main.main(new String[] {ods_file_path,"-t",template_directory_path, "-o", output_directory_path,"-d"});
 	  assertTrue(errContent.toString().contains("[debug]"), "[debug] tag not found.");
   }
   

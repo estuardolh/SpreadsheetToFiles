@@ -1,9 +1,0 @@
-[<#list products as product>
-  {
-  "id":"${product.id}", 
-  "units":"${product.units?eval}",
-  "cost":"${product.cost}",
-  "name":"${product.name}"
-  }<#if product?index lt products?size-1 >,</#if>
-</#list>
-]

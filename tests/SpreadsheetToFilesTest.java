@@ -22,6 +22,10 @@ public class SpreadsheetToFilesTest {
   
   private final PrintStream originalOut = System.out;
   private final PrintStream originalErr = System.err;
+  
+  public static String ods_file_path = "./examples/test.ods";
+  public static String template_directory_path = "./examples/templates/";
+  public static String output_directory_path = "./examples/output/";
 
   @BeforeMethod
   public void setUpStreams() {
@@ -37,12 +41,12 @@ public class SpreadsheetToFilesTest {
 		Logger.getRootLogger().addAppender(new NullAppender());
 	  
 		SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
-		spreadsheet_to_files.setOdsFilePath("./stage/test.ods");
-		spreadsheet_to_files.setTemplatesDirectory("./stage/templates/");
-		spreadsheet_to_files.setOutputDirectory("./stage/outputs/");
+		spreadsheet_to_files.setOdsFilePath(ods_file_path);
+		spreadsheet_to_files.setTemplatesDirectory(template_directory_path);
+		spreadsheet_to_files.setOutputDirectory(output_directory_path);
 	  
 		String output = "";
-		String output_expected = "  INSERT INTO PRODUCT(id, units, cost, name) VALUES('M1', 100, 10.0, 'SMART PHONE P');\n"
+		String output_expected = "INSERT INTO PRODUCT(id, units, cost, name) VALUES('M1', 100, 10.0, 'SMART PHONE P');\n"
 				+ "  INSERT INTO PRODUCT(id, units, cost, name) VALUES('M2', 200, 20.0, 'SMART PHONE Q');\n"
 				+ "  INSERT INTO PRODUCT(id, units, cost, name) VALUES('M3', 300, 30.5, 'SMART PHONE R');\n";
 		try {
@@ -62,11 +66,8 @@ public class SpreadsheetToFilesTest {
 		Logger.getRootLogger().removeAllAppenders();
 		Logger.getRootLogger().addAppender(new NullAppender());
 	  
-		String template_directory_path = "./stage/templates/"
-				, output_directory_path = "./stage/outputs/";
-		
 		SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
-		spreadsheet_to_files.setOdsFilePath("./stage/test.ods");
+		spreadsheet_to_files.setOdsFilePath(output_directory_path+"/test.ods");
 		spreadsheet_to_files.setTemplatesDirectory(template_directory_path);
 		spreadsheet_to_files.setOutputDirectory(output_directory_path);
 		

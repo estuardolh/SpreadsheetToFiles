@@ -129,7 +129,7 @@ public class Main {
 		INIConfiguration ini_configuration = getIniConfiguration("configuration.ini");
 		
 		if(ini_configuration != null && !line.hasOption("version") ) {
-			parameters[0] = (line.getArgs()[0].isEmpty()?ini_configuration.getString("main.ods_file_path"):line.getArgs()[0]);
+			parameters[0] = (line.getArgs().length == 0?ini_configuration.getString("main.ods_file_path"):line.getArgs()[0]);
 			parameters[1] = (!line.hasOption("t")?ini_configuration.getString("main.templates_directory_path"):line.getOptionValue("t"));
 			parameters[2] = (!line.hasOption("o")?ini_configuration.getString("main.output_directory_path"):line.getOptionValue("o"));
 		}
