@@ -2,7 +2,7 @@
 
 **ODs content**
 
-![ODs content](./examples/ods_content.png "ODs file example")
+![ODs content](./ods_content.png "ODs file example")
 
 **Template**
 

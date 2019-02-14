@@ -14,7 +14,7 @@ usage: java -jar SpreadsheetToFiles.jar <input ods file> -t <templates directory
 ```
 
 #### Templates
-For template design check out [here](https://freemarker.apache.org/docs/dgui.html)	
+For template design checkout [here](https://freemarker.apache.org/docs/dgui.html)
 
 ## Examples
 For more examples checkout [here](./examples/)
