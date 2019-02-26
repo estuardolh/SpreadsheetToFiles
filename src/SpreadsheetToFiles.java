@@ -91,7 +91,9 @@ public class SpreadsheetToFiles {
 			
 			List<LinkedHashMap<String, String>> rows_filled = null;
 			Object[] rows = range.getValues();
+			int stop_here_i = -1;
 			for(int row_j = 0; row_j < rows.length ; row_j++ ) {
+				if(debug) Log.debug("  ["+sheet.getName()+"] Row: "+row_j);
 				Object[] row = (Object[])rows[row_j];
 				
 				LinkedHashMap<String, String> row_filling_map = null; 
@@ -103,31 +105,55 @@ public class SpreadsheetToFiles {
 				}
 				
 				for(int column_i = 0; column_i < row.length ; column_i++ ) {
-					Object cell = row[column_i];
-					
-					if(row_j == 0) {
-    					header_list.add(cell.toString());
-    					if(debug) Log.debug("  Header: Column name: \""+(cell==null?"(NULL)":cell.toString())+"\"");
-        			}
-        			
-					if(debug) Log.debug("  ["+row_j+"]["+column_i+"] "+(cell==null?"(NULL)":cell.toString()));
-					
-        			if(row_j > 0 && column_i < row.length) {
-        				if(header_list == null && debug) Log.debug("Null header");
-        				row_filling_map.put(header_list.get(column_i), (cell==null?"":cell.toString()));
-        				if(debug) Log.debug("  Row: Map: key-value\""+header_list.get(column_i)+"\"-\""+(cell==null?"(NULL)":cell.toString())+"\"");
-        			}
-        			if( row_j > 0 && column_i == row.length-1) {
-        				rows_filled.add(row_filling_map);
-        				if(debug) Log.debug("  row filled added!");
-        			}
+					/*if(stop_here_i == 0 && column_i == row.length-1) {
+						stop_here_i = column_i;
+					}*/
+					if(stop_here_i > -1 && column_i == stop_here_i) {
+						break;
+					}else {
+						Object cell = row[column_i];
+						
+						if(true) {
+							if(row_j == 0) {
+ 								if(cell == null) {
+									stop_here_i = column_i;
+									break; 
+								}
+		    					header_list.add(cell.toString());
+		    					if(debug) Log.debug("  Header: Column name: \""+(cell==null?"(NULL)":cell.toString())+"\"");
+		        			}
+		        			
+							if(debug) Log.debug("  ["+sheet.getName()+"]["+row_j+"]["+column_i+"] "+(cell==null?"(NULL)":cell.toString()));
+							
+		        			if(row_j > 0 && column_i < row.length) {
+		        				if(header_list == null && debug) Log.debug("Null header");
+		        				if(header_list.get(column_i) == null && debug) Log.debug("header-item null");
+		        				
+		        				row_filling_map.put(header_list.get(column_i), (cell==null?"":cell.toString()));
+		        				if(debug) Log.debug("  Row: Map: key-value\""+header_list.get(column_i)+"\"-\""+(cell==null?"(NULL)":cell.toString())+"\"");
+		        			}
+		        			if( row_j > 0 && (column_i == stop_here_i-1 || column_i == row.length-1)) {
+		        				boolean empty_row = true;
+		        				for(String cell_value : row_filling_map.values()) {
+		        					if(cell_value != null && !cell_value.trim().isEmpty()) {
+		        						empty_row = false;
+		        						break;
+		        					}
+		        				}
+		        				if(!empty_row) rows_filled.add(row_filling_map);
+		        				if(debug) Log.debug("  row filled added!");
+		        			}
+						}//--
+					}//
 				}
 				
 				if(row_j == rows.length-1) {
 					if(debug) Log.debug("  sheet: \""+sheet.getName()+"\"");
 					root.put(sheet.getName(), rows_filled);
+					
 				}
 			}
+			stop_here_i = 0;
 		}
 		
 		/*

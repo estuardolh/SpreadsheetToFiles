@@ -67,7 +67,7 @@ public class SpreadsheetToFilesTest {
 		Logger.getRootLogger().addAppender(new NullAppender());
 	  
 		SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
-		spreadsheet_to_files.setOdsFilePath(output_directory_path+"/test.ods");
+		spreadsheet_to_files.setOdsFilePath(ods_file_path);
 		spreadsheet_to_files.setTemplatesDirectory(template_directory_path);
 		spreadsheet_to_files.setOutputDirectory(output_directory_path);
 		
