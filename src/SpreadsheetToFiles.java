@@ -3,18 +3,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.CharsetDecoder;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
-import com.github.miachm.SODS.spreadsheet.Range;
-import com.github.miachm.SODS.spreadsheet.Sheet;
-import com.github.miachm.SODS.spreadsheet.SpreadSheet;
+import com.github.miachm.sods.Range;
+import com.github.miachm.sods.Sheet;
+import com.github.miachm.sods.SpreadSheet;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

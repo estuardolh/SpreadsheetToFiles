@@ -12,20 +12,13 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.configuration2.INIConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-import org.apache.log4j.varia.NullAppender;
+
 import freemarker.template.TemplateException;
 
 public class Main {
 	public static final String SPREADSHEET_TO_FILES_VERSION = "1.0";
 	
 	public static void main(String[] args) {
-		BasicConfigurator.configure();
-		
-		Logger.getRootLogger().removeAllAppenders();
-		Logger.getRootLogger().addAppender(new NullAppender());
-		
 		// Hello world
 		String[] values = processParametersAndReturnValues(args);
 		String ods_file_path = values[0];

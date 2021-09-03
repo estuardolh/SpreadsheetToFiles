@@ -1,5 +1,3 @@
-import static org.junit.Assert.assertTrue;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
@@ -7,9 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-import org.apache.log4j.varia.NullAppender;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -35,11 +30,6 @@ public class SpreadsheetToFilesTest {
   
   @Test
   public void testOutputContent() {
-		BasicConfigurator.configure();
-		
-		Logger.getRootLogger().removeAllAppenders();
-		Logger.getRootLogger().addAppender(new NullAppender());
-	  
 		SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
 		spreadsheet_to_files.setOdsFilePath(ods_file_path);
 		spreadsheet_to_files.setTemplatesDirectory(template_directory_path);
@@ -61,12 +51,7 @@ public class SpreadsheetToFilesTest {
   
   @Test
   public void testFilesExist() {
-	  BasicConfigurator.configure();
-		
-		Logger.getRootLogger().removeAllAppenders();
-		Logger.getRootLogger().addAppender(new NullAppender());
-	  
-		SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
+	  	SpreadsheetToFiles spreadsheet_to_files = new SpreadsheetToFiles();
 		spreadsheet_to_files.setOdsFilePath(ods_file_path);
 		spreadsheet_to_files.setTemplatesDirectory(template_directory_path);
 		spreadsheet_to_files.setOutputDirectory(output_directory_path);
